@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import fs from 'fs';
 
 type BookProps = {
   [id: string]: {
@@ -67,7 +68,10 @@ const getRandomId = (N = 20) => {
     });
   }
 
-  console.log(JSON.stringify(books));
+  fs.writeFile("books.json", JSON.stringify(books), (err) => {
+    if (err) throw err;
+    console.log('正常に書き込みが完了しました');
+  });
 
   await browser.close();
 })();

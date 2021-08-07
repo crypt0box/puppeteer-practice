@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const puppeteer_1 = __importDefault(require("puppeteer"));
+const fs_1 = __importDefault(require("fs"));
 const books = [];
 const options = {
     headless: false,
@@ -58,6 +59,10 @@ const getRandomId = (N = 20) => {
             },
         });
     }
-    console.log(JSON.stringify(books));
+    fs_1.default.writeFile("books.json", JSON.stringify(books), (err) => {
+        if (err)
+            throw err;
+        console.log('正常に書き込みが完了しました');
+    });
     yield browser.close();
 }))();
